@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/hleoc/hello-jwt#readme",
   "dependencies": {
+    "camelize": "^1.0.1",
     "express": "4.17.1",
     "mysql2": "3.0.0"
   },

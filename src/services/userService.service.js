@@ -1,6 +1,13 @@
 const { userModel } = require('../models');
 
 const createUsers = async (user) => {
+    const { userName } = user;
+    
+    const checkUserName = await userModel.findUserByName(userName);
+    if (checkUserName) {
+        return { status: 'CONFLICT', data: { message: 'Usuário já existe.' } };
+    }
+
     const userId = await userModel.createUsers(user);
     const findUser = await userModel.findUserByid(userId);
 

@@ -6,6 +6,7 @@ const httpErrorMap = {
     INVALID_VALUE: 422,
     NO_CONTENT: 204,
     FORBIDDEN: 403,
+    ANAUTHORIZED: 401,
 };
 
 const mapStatusHTTP = (status) => httpErrorMap[status] || 500;

@@ -1,3 +1,5 @@
 node_modules
 coverage
 .nyc*
+user.controller.js
+validateJWT.js

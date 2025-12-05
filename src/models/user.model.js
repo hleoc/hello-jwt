@@ -16,7 +16,15 @@ const findUserByid = async (userId) => {
     return camelize(user);
 };
 
+const findUserByName = async (userName) => {
+    const query = 'SELECT * FROM users WHERE user_name = ?;';
+    const values = [userName];
+    const [[user]] = await connection.execute(query, values);
+    return camelize(user); 
+};
+
 module.exports = {
     createUsers,
     findUserByid,
+    findUserByName,
 };

@@ -4,6 +4,10 @@ const mapStatusHTTP = require('../utils/mapStatusHTTP');
 
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
 
+function extractToken(bearerToken) {
+    return bearerToken.split(' ')[1];
+}
+
 const isBodyValid = (username, pass) => username && pass;
 
 const createUsers = async (req, res) => {
@@ -60,7 +64,24 @@ const userLogin = async (req, res) => {
     res.status(mapStatusHTTP('SUCCESSFUL')).json({ token });
 };
 
+const findByMe = async (req, res) => {
+    const authorizationToken = req.headers['authorization'];
+    
+    if (!authorizationToken) {
+        return res.status(mapStatusHTTP('UNAUTHORIZED')).json({ error: { message: 'Token not found' } });
+    }
+
+    /* Utilizamos a função para extrair o token */
+    const token = extractToken(authorizationToken);
+
+    /* Através o método verify, podemos validar e decodificar o nosso JWT. */
+    const decoded = jwt.verify(token, secret);
+
+    return res.status(mapStatusHTTP('SUCCESSFUL')).json({ username: decoded.data.name, admin: decoded.data.admin });
+};
+
 module.exports = {
     createUsers,
     userLogin,
+    findByMe,
 };

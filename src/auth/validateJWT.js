@@ -20,12 +20,12 @@ const { userService } = require('../services');
         /* Aquele token gerado anteriormente virá na requisição através do
      header Authorization em todas as rotas que queremos que
      sejam autenticadas. */
-        const bearerToken = req.header('Authorization');
+        const bearerToken = req.headers['authorization'];
         
         /* Caso o token não seja informado, simplesmente retornamos
         o código de status 401 - não autorizado. */
         if (!bearerToken) {
-          return res.status(mapStatusHTTP('401')).json({ error: 'Token não encontrado' });
+          return res.status(mapStatusHTTP('ANAUTHORIZED')).json({ error: 'Token não encontrado' });
         }
         
         /* Utilizamos a função para extrair o token */
@@ -52,7 +52,7 @@ const { userService } = require('../services');
 
                 /* Não existe um usuário na nossa base com o id informado no token. */
                 if (!user) {
-                    return res.status(401).json({ message: 'Erro ao procurar usuário do token.' });
+                    return res.status(mapStatusHTTP('ANAUTHORIZED')).json({ message: 'Erro ao procurar usuário do token.' });
                 }
 
                 /* O usuário existe! Colocamos ele em um campo no objeto req.
@@ -64,7 +64,7 @@ const { userService } = require('../services');
                 é a própria callback da rota. */
                 next();
         } catch (error) {
-            return res.status(401).json({ message: 'Token inválido' });
+            return res.status(mapStatusHTTP('ANAUTHORIZED')).json({ message: 'Token inválido' });
         }
    };
 

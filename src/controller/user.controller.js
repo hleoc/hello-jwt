@@ -40,7 +40,7 @@ const userLogin = async (req, res) => {
 
     // A propriedade expiresIn aceita o tempo de forma bem descritiva. Por exemplo: '7d' = 7 dias.
     const jwtConfig = {
-      expiresIn: '1h',
+      expiresIn: '1m',
       algorithm: 'HS256',
     };
 
@@ -80,8 +80,13 @@ const findByMe = async (req, res) => {
     return res.status(mapStatusHTTP('SUCCESSFUL')).json({ username: decoded.data.name, admin: decoded.data.admin });
 };
 
+const findSecret = async (_req, res) => {
+    res.status(mapStatusHTTP('SUCCESSFUL')).json({ secretInfo: 'Peter Parker é o Homem-Aranha' });
+};
+
 module.exports = {
     createUsers,
     userLogin,
     findByMe,
+    findSecret,
 };

@@ -15,6 +15,12 @@ const createUsers = async (user) => {
         data: { message: 'Novo usuário criado com sucesso', user: findUser } };  
 };
 
+const getByUserId = async (userId) => {
+    const findUser = await userModel.findUserByid(userId);
+
+     return { status: 'SUCCESSFUL', data: findUser };
+};
+
 const findUserByName = async (userName) => {
     const findUser = await userModel.findUserByName(userName);
 
@@ -24,4 +30,5 @@ const findUserByName = async (userName) => {
 module.exports = {
     createUsers,
     findUserByName,
+    getByUserId,
 };
